@@ -39,7 +39,9 @@
 
 
 
-test figures
+test figures:
+
+
 package com.iotproject.hp.finalapplication;
 
 import android.os.Bundle;
@@ -134,6 +136,11 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
+
+
+
+
+customer activity:
 
 package com.iotproject.hp.finalapplication;
 
@@ -274,7 +281,9 @@ public class CustomerActivity extends AppCompatActivity {
 }
 
 
-customer database
+
+
+customer database:
 package com.iotproject.hp.finalapplication.model;
 
 /**
