@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.iotproject.hp.finalapplication">
+
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/chrysler"
+        android:label="DL TESTING"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CustomerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".test">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+
+
+
+test figures
+package com.iotproject.hp.finalapplication;
+
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.iotproject.hp.finalapplication.model.Customer;
+
+/**
+ * Created by HP on 7/5/2018.
+ */
+
+public class test extends AppCompatActivity {
+    private  int j;
+
+    Button btntest1;
+
+    DatabaseReference dbRef;
+    int status;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.test);
+
+
+        btntest1 = findViewById(R.id.test1);
+
+
+        dbRef = FirebaseDatabase.getInstance().getReference("Customer");
+
+        btntest1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                status = 1;
+//                CustomerActivity obj =new CustomerActivity();
+                String val = getIntent().getExtras().getString("Customer_id");
+               String id = dbRef.child(val).getKey();
+//                                Toast.makeText(test.this, "ID: "+val, Toast.LENGTH_LONG).show();
+                dbRef.child(val).child("status").setValue(status);
+                Log.i("Status", String.valueOf(status));
+
+                Toast.makeText(test.this, "test will begin shortly", Toast.LENGTH_LONG).show();
+                Toast.makeText(test.this, "loading cridentials", Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
+
+    }
+
+}
+
+
+main activity
+package com.iotproject.hp.finalapplication;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.iotproject.hp.finalapplication.model.Customer;
+
+public class MainActivity extends AppCompatActivity {
+    Button btnregister,btnsave;
+    EditText Name,llr;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        btnregister=findViewById(R.id.btnregister);
+        btnregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
+
+                           }
+        });
+    }
+}
+
+
+package com.iotproject.hp.finalapplication;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.iotproject.hp.finalapplication.Adapters.CustomerList;
+import com.iotproject.hp.finalapplication.model.Customer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by HP on 7/3/2018.
+ */
+
+public class CustomerActivity extends AppCompatActivity {
+
+    private static int i=1;
+    public String custId;
+    EditText etName, etLlr;
+    Button btnSave;
+
+
+    List<Customer> customers;
+    DatabaseReference custReference;
+    ListView lvCustomers;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.next_page);
+        etName = findViewById(R.id.name);
+        etLlr = findViewById(R.id.llrnumber);
+        btnSave = findViewById(R.id.save);
+
+        customers = new ArrayList<>();
+
+        custReference = FirebaseDatabase.getInstance().getReference("Customer");
+
+        lvCustomers = findViewById(R.id.listview1);
+
+
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                String cname = etName.getText().toString();
+                String cLlr = etLlr.getText().toString();
+                int status=0;
+
+                if (!TextUtils.isEmpty(cname) && !TextUtils.isEmpty(cLlr)){
+
+                    String id = custReference.child(String.valueOf(i)).getKey();
+                    Customer customer = new Customer(id,cname,cLlr,status);
+
+                    custReference.child(id).setValue(customer);
+                    i=i+1;
+
+                    Toast.makeText(CustomerActivity.this, "Data inserted", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(CustomerActivity.this, "Fields shd not be empty", Toast.LENGTH_SHORT).show();
+                }
+                etName.setText(null);
+                etLlr.setText(null);
+
+            }
+
+        });
+
+        lvCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Customer customer = customers.get(position);
+//                Toast.makeText(getApplicationContext(), ""+position, Toast.LENGTH_SHORT).show();
+                custId=String.valueOf(position+1);
+                startActivity(new Intent(CustomerActivity.this,test.class));
+                Intent intent = new Intent(CustomerActivity.this,test.class);
+//
+                intent.putExtra("Customer_id",custId);
+//
+                startActivity(intent);
+
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        custReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                customers.clear();
+
+                for (DataSnapshot custSnapshot : dataSnapshot.getChildren()){
+
+                    Customer customer = custSnapshot.getValue(Customer.class);
+
+                    customers.add(customer);
+                }
+
+                CustomerList adapter = new CustomerList(CustomerActivity.this,customers);
+                lvCustomers.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                Toast.makeText(CustomerActivity.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+}
+
+
+customer database
+package com.iotproject.hp.finalapplication.model;
+
+/**
+ * Created by HP on 7/3/2018.
+ */
+
+public class Customer {
+    private String cid,cname, cllrnmbr,result;
+    private  String t1state,t2state,t3state,t4state;
+    private int status;
+
+    public Customer() {
+    }
+
+    public Customer(String cid, String cname, String cllrnmbr, int status) {
+        this.cid = cid;
+        this.result = result;
+        this.cname = cname;
+        this.cllrnmbr = cllrnmbr;
+        this.t1state=t1state;
+        this.t2state=t2state;
+        this.t3state=t3state;
+        this.t4state=t4state;
+        this.status= this.status;
+
+
+
+    }
+
+    public String getT1state() {
+        return t1state;
+    }
+
+    public String getT2state() {
+        return t2state;
+    }
+
+    public String getT3state() {
+        return t3state;
+    }
+
+    public String getT4state() {
+        return t4state;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
+    }
+
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public String getCllrnmbr() {
+        return cllrnmbr;
+    }
+
+    public void setCllrnmbr(String cllrnmbr) {
+        this.cllrnmbr = cllrnmbr;
+    }
+}
+
+
