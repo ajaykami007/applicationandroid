@@ -1,3 +1,3 @@
-#checklist
-[ ] Revied
-[ ] Tested
+# checklist
+- [ ] Revied
+- [ ] Tested
