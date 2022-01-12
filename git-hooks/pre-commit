@@ -1,0 +1,11 @@
+#!/bin/bash
+
+rt=$(git rev-parse --abbrev-ref HEAD)
+yy="([0-9]+)(-)([a-Z]*)"
+if ! [[ $rt =~ $yy ]]; then
+  echo "Your commit was rejected due to branching name $rt"
+  echo "Please rename your branch with $yy syntax"
+  exit 1
+  else
+    echo "succefully commited changes "
+fi
