@@ -1,12 +1,17 @@
 version: 2.1
+parameters: 
+  release_workflow: 
+    default: false
+    type: boolean
 
 workflows:
-  Release Pipeline:  
+  Release Pipeline:
+    when: <<parameters.release_workflow>>
     jobs:
       - Build:
           filters:
             branches:
-              only: main
+              only: development
       - Run Backend Automation Test Cases:
           requires:
             - Build
