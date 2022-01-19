@@ -1,11 +1,13 @@
 version: 2.1
+orbs:
+  slack: circleci/slack@4.1
 workflows:
   Release Pipeline:
     jobs:
       - Build:
           filters:
             branches:
-              only: development  
+              only: main
       - Run Backend Automation Test Cases:
           requires:
             - Build
@@ -31,8 +33,8 @@ workflows:
     jobs:
       - Build:
           filters:
-            branches: 
-              ignore: [main,development]
+            branches:
+              only: development
       - Run Backend Automation Test Cases:
           requires:
             - Build
@@ -88,30 +90,37 @@ jobs:
       - run:
           name: "Deploy to obelix-automation.stv.amagi.tv"
           command: "echo deploying the helm into automation environment"
+
   Deploy to Test Environment:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - run:
-          name: "nothing to do"
-          command: "echo hello world"
-  
+          name: "Deploy to obelix.test.stv.amagi.tv"
+          command: "echo deploying the helm into test environment"
+
   Deploy to Staging Environment:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - run:
-          name: "Deploy to staging"
-          command: "echo hello user"
+          name: "Deploy to obelix.staging.stv.amagi.tv"
+          command: "echo deploying the helm into staging environment"
+
   Deploy to Production Environment:
-    docker: 
+    docker:
       - image: cimg/base:stable
-    steps: 
+    steps:
       - checkout
       - run:
-          name: "some name"
-          command: "echo some name"
-          
-          
+          name: "Creating release tag based on central repo"
+          command: "echo created release tag v0.0.1"
+      - run:
+          name: "Deploy to amaginow.tv"
+          command: "echo deploying the helm into production environment"
+      - run:
+          name: "Update documentation with new release note"
+          command: "echo updated documentation with new release notes"
+
