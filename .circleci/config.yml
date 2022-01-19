@@ -1,6 +1,6 @@
 version: 2.1
 parameters: 
-  release_workflow: 
+  start_release_workflow: 
     default: false
     type: boolean
 
