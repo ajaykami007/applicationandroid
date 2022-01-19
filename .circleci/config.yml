@@ -1,12 +1,12 @@
 version: 2.1
 parameters: 
-  release_workflow: 
+  start_release_workflow: 
     default: false
     type: boolean
 
 workflows:
   Release Pipeline:
-    when: <<pipeline.parameters.release_workflow>>
+    when: <<pipeline.parameters.start_release_workflow>>
     jobs:
       - Build:
           filters:
