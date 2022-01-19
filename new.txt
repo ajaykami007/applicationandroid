@@ -4,4 +4,6 @@ some text
 development
 new line
 new line added
-new line added2
+new line agin
+new line
+new text
