@@ -1,0 +1,20 @@
+name: Execute CircleCI Workflow
+on:
+  branch: 
+    - main
+  pull_request: 
+    - created
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Capture triggering branch name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - name: Trigger CircleCI build-beta workflow.
+        uses: ajaykami007/applicationandroid@v1
+        with:
+          user-token: ${{ secrets.CIRCLECI_TOKEN }}
+          project-slug: ajaykami007/applicationandroid
+          branch: ${{ env.BRANCH_NAME }}
+          payload: '{"run_output_workflow": true}'
