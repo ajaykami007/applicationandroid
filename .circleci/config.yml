@@ -76,6 +76,7 @@ jobs:
       - run:
           name: "Echo param"
           command: "echo export SLACK_PARAM_MENTIONS='<@$SLACK_USER_ID>' >> $BASH_ENV"
+
   Deploy to Backend Development Environment:
     docker:
       - image: cimg/base:stable
@@ -93,4 +94,24 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "nothing to do"
+          command: "echo hello world"
+  
+  Deploy to Staging Environment:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Deploy to staging"
+          command: "echo hello user"
+  Deploy to Production Environment:
+    docker: 
+      - image: cimg/base:stable
+    steps: 
+      - checkout
+      - run:
+          name: "some name"
+          command: "echo some name"
+          
           
