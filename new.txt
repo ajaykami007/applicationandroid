@@ -1,2 +1,4 @@
 this is sample text
+new line adde
 some text
+development
