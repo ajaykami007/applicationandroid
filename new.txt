@@ -2,3 +2,5 @@ this is sample text
 new line adde
 some text
 development
+new line
+new line added
