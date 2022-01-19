@@ -32,7 +32,7 @@ workflows:
       - Build:
           filters:
             branches:
-              only: development
+              ignore: main
       - Run Backend Automation Test Cases:
           requires:
             - Build
