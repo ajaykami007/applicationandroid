@@ -6,7 +6,7 @@ parameters:
 
 workflows:
   Release Pipeline:
-    when: <<parameters.release_workflow>>
+    when: <<pipeline.parameters.release_workflow>>
     jobs:
       - Build:
           filters:
