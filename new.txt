@@ -4,6 +4,5 @@ some text
 development
 new line
 new line added
-new line agin
-new line
-new text
+new line added2
+sometesting
