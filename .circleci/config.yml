@@ -29,7 +29,11 @@ workflows:
 
   Development Pipeline:
     jobs:
-      - Build
+      - Build:
+          filters:
+            branches: 
+              only: development
+          
 
       - Run Backend Automation Test Cases:
           requires:
