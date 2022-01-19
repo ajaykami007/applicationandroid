@@ -33,8 +33,6 @@ workflows:
           filters:
             branches: 
               only: development
-          
-
       - Run Backend Automation Test Cases:
           requires:
             - Build
