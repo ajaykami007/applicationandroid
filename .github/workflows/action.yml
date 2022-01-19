@@ -3,6 +3,8 @@ on:
   pull_request:
     types: 
       opened
+    branches: 
+      - 'main'
 
 jobs:
   execute:
@@ -16,4 +18,4 @@ jobs:
           user-token: ${{ secrets.CCI_TOKEN }}
           project-slug: ajaykami007/applicationandroid
           branch: ${{ env.BRANCH_NAME }}
-          payload: '{"run_output_workflow": true}'
+          payload: '{"release_workflow": true}'
