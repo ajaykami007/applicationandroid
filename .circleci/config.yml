@@ -5,7 +5,7 @@ workflows:
       - Build:
           filters:
             branches:
-              ignore: development   
+              only: main   
       - Run Backend Automation Test Cases:
           requires:
             - Build
