@@ -33,4 +33,4 @@ jobs:
         --header 'Content-Type: application/json' \
         --header 'Accept: application/json' \
         --header "Circle-Token: $CIRCLE_CI_TOKEN" \
-        --data '{"branch":"dev","parameters":{"start_release_workflow":true}}'
+        --data '{"branch":"development","parameters":{"start_release_workflow":true}}'
