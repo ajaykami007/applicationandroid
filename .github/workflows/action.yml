@@ -26,11 +26,11 @@ jobs:
       run: |
         export CIRCLE_CI_TOKEN=${CIRCLE_TOKEN}
         echo $CIRCLE_CI_TOKEN
-        curl https://circleci.com/api/v2/me --header "Circle-Token: $CIRCLE_TOKEN"
+        curl https://circleci.com/api/v2/me --header "Circle-Token: $CIRCLE_CI_TOKEN"
         echo " "
         echo " "
         curl -X POST https://circleci.com/api/v2/project/gh/ajaykami007/applicationandroid/pipeline \
         --header 'Content-Type: application/json' \
         --header 'Accept: application/json' \
         --header "Circle-Token: $CIRCLE_CI_TOKEN" \
-        --data '{"branch":"dev","parameters":{"start_release_workflow":true}}'
+        --data '{"branch":"development","parameters":{"start_release_workflow":true}}'
