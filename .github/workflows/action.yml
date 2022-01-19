@@ -1,9 +1,8 @@
 name: Execute CircleCI Workflow
 on:
-  branch: 
-    - main
-  pull_request: 
-    - created
+  pull_request:
+    types: 
+      opened
 
 jobs:
   execute:
