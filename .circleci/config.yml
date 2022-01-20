@@ -1,13 +1,7 @@
 version: 2.1
-parameters: 
-  start_release_workflow: 
-    default: false
-    type: boolean
 
 workflows:
   Release Pipeline:
-    when: <<pipeline.parameters.start_release_workflow>>
-    jobs:
       - Build:
           filters:
             branches:
@@ -34,13 +28,11 @@ workflows:
             - Product Team Approval
 
   Development Pipeline:
-    when: 
-        not: <<pipeline.parameters.start_release_workflow>>
     jobs:
       - Build:
           filters:
             branches:
-              only: development
+              ignore: [main,development]
       - Run Backend Automation Test Cases:
           requires:
             - Build
