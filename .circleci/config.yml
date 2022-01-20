@@ -30,7 +30,7 @@ workflows:
 
   Development Pipeline:
     when:
-      pull_request: false
+      pull_request_merged: true
     jobs:
       - Build:
           filters:
