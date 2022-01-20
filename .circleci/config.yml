@@ -30,7 +30,7 @@ workflows:
 
   Development Pipeline:
     jobs:
-      - Build
+      - Build:
           filters:
             branches:
               only: feature
