@@ -29,13 +29,11 @@ workflows:
             - Product Team Approval
 
   Development Pipeline:
-    when:
-      pull_request_merged: true
     jobs:
       - Build:
           filters:
             branches:
-              ignore: [main,feature,development]
+              ignore: [main,development]
       - Run Backend Automation Test Cases:
           requires:
             - Build
