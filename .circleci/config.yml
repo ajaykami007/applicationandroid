@@ -29,6 +29,8 @@ workflows:
             - Product Team Approval
 
   Development Pipeline:
+    when:
+      pull_request: false
     jobs:
       - Build:
           filters:
