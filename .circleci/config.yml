@@ -35,7 +35,7 @@ workflows:
 
   Development Pipeline:
     when: 
-      - not: <<pipeline.parameters.start_release_workflow>>
+        not: <<pipeline.parameters.start_release_workflow>>
     jobs:
       - Build:
           filters:
