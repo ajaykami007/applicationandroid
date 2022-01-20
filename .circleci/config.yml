@@ -3,10 +3,7 @@ version: 2.1
 workflows:
   Release Pipeline:
     jobs:
-      - Build:
-          filters:
-            branches:
-              only: development
+      - Build 
       - Run Backend Automation Test Cases:
           requires:
             - Build
@@ -30,10 +27,7 @@ workflows:
 
   Development Pipeline:
     jobs:
-      - Build:
-          filters:
-            branches:
-              ignore: [main,development]
+      - Build
       - Run Backend Automation Test Cases:
           requires:
             - Build
