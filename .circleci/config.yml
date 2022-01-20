@@ -1,39 +1,12 @@
 version: 2.1
 
 workflows:
-  Release Pipeline:
-    jobs:
-      - Build:
-          filters:
-            branches:
-              only: development
-      - Run Backend Automation Test Cases:
-          requires:
-            - Build
-      - Deploy to Test Environment:
-          requires:
-            - Run Backend Automation Test Cases
-      - QA Team Approval:
-          type: approval
-          requires:
-            - Deploy to Test Environment
-      - Deploy to Staging Environment:
-          requires:
-            - QA Team Approval
-      - Product Team Approval:
-          type: approval
-          requires:
-            - Deploy to Staging Environment
-      - Deploy to Production Environment:
-          requires:
-            - Product Team Approval
-
   Development Pipeline:
     jobs:
       - Build:
           filters:
             branches:
-              ignore: [main,feature]
+              only: development
       - Run Backend Automation Test Cases:
           requires:
             - Build
@@ -90,36 +63,4 @@ jobs:
           name: "Deploy to obelix-automation.stv.amagi.tv"
           command: "echo deploying the helm into automation environment"
 
-  Deploy to Test Environment:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "Deploy to obelix.test.stv.amagi.tv"
-          command: "echo deploying the helm into test environment"
-
-  Deploy to Staging Environment:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "Deploy to obelix.staging.stv.amagi.tv"
-          command: "echo deploying the helm into staging environment"
-
-  Deploy to Production Environment:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "Creating release tag based on central repo"
-          command: "echo created release tag v0.0.1"
-      - run:
-          name: "Deploy to amaginow.tv"
-          command: "echo deploying the helm into production environment"
-      - run:
-          name: "Update documentation with new release note"
-          command: "echo updated documentation with new release notes"
-
+  
