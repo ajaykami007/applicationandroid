@@ -6,7 +6,6 @@ workflows:
       - Build:
           filters:
             branches:
-              ignore: feature
               only: development
       - Run Backend Automation Test Cases:
           requires:
@@ -29,19 +28,7 @@ workflows:
           requires:
             - Product Team Approval
 
-  Development Pipeline:
-    jobs:
-      - Build:
-          filters:
-            branches:
-              only: [feature,development]
-      - Run Backend Automation Test Cases:
-          requires:
-            - Build
-      - Deploy to Backend Development Environment:
-          requires:
-            - Run Backend Automation Test Cases
-
+  
 jobs:
   Build:
     docker:
@@ -79,17 +66,7 @@ jobs:
           name: "Echo param"
           command: "echo export SLACK_PARAM_MENTIONS='<@$SLACK_USER_ID>' >> $BASH_ENV"
 
-  Deploy to Backend Development Environment:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-    #  - run:
-    #     name: "Failing a build"
-    #     command: "time.sleep"
-      - run:
-          name: "Deploy to obelix-automation.stv.amagi.tv"
-          command: "echo deploying the helm into automation environment"
+
 
   Deploy to Test Environment:
     docker:
