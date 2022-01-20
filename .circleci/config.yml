@@ -6,6 +6,7 @@ workflows:
       - Build:
           filters:
             branches:
+              ignore: feature
               only: development
       - Run Backend Automation Test Cases:
           requires:
@@ -33,7 +34,7 @@ workflows:
       - Build:
           filters:
             branches:
-              ignore: [main,feature]
+              only: [feature,development]
       - Run Backend Automation Test Cases:
           requires:
             - Build
