@@ -1,6 +1,25 @@
 version: 2.1
+parameters:
+  start_release_workflow:
+    default: false
+    type: boolean
+  start_dev_workflow:
+    default: false
+    type: boolean
 
 jobs:
+  Trigger workflow:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      -run:
+        name: check trigeer for build
+        command: |
+          if [CIRCLE_BRANCH == 'development'] && [CIRCLE_PULL_REQUEST != 'NULL']
+          then pipeline.parameters.start_release_workflow=true
+          elif [CIRCLE_BRANCH == 'development'] && [CIRCLE_PULL_REQUEST == 'NULL']
+          then pipeline.parameters.start_dev_workflow=true
   Build:
     docker:
       - image: cimg/base:stable
@@ -93,6 +112,7 @@ jobs:
 workflows:
 
   Development Pipeline:
+    when: <<pipeline.parameters.start_release_workflow>>
     jobs:
       - Build:
           filters:
@@ -106,6 +126,7 @@ workflows:
             - Run Backend Automation Test Cases
 
   Release Pipeline:
+    when: <<pipeline.parameters.start_dev_workflow>>
     jobs:
       - Build:
           filters:
