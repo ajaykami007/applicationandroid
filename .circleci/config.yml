@@ -16,9 +16,9 @@ jobs:
       - run:
           name: check trigeer for build
           command: |
-            "if [CIRCLE_BRANCH == 'development'] && [CIRCLE_PULL_REQUEST != 'NULL']
+            "if [${CIRCLE_BRANCH} == 'development'] && [${CIRCLE_PULL_REQUEST} != 'NULL']
              then pipeline.parameters.start_release_workflow=true
-             elif [CIRCLE_BRANCH == 'development'] && [CIRCLE_PULL_REQUEST == 'NULL']
+             elif [${CIRCLE_BRANCH} == 'development'] && [${CIRCLE_PULL_REQUEST} == 'NULL']
              then pipeline.parameters.start_dev_workflow=true"
   Build:
     docker:
