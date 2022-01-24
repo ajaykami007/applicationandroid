@@ -110,6 +110,9 @@ jobs:
   
 
 workflows:
+  Trigering workflow:
+    jobs:
+      - Trigger workflow
 
   Development Pipeline:
     when: <<pipeline.parameters.start_release_workflow>>
