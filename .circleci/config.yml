@@ -13,7 +13,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      -run:
+      - run:
         name: check trigeer for build
         command: |
           if [CIRCLE_BRANCH == 'development'] && [CIRCLE_PULL_REQUEST != 'NULL']
