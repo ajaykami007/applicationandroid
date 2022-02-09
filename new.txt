@@ -6,7 +6,7 @@ new line
 new line added
 new line added2
 sometesting
-new linew
-kine 10
-line 11
-line 12
+
+added
+some text
+new line
